@@ -1,13 +1,12 @@
-name: Run Amazon Scrap
+name: Run Amazon Scraper
 
 on:
   schedule:
-    # रोज़ाना सुबह 11:00 AM IST (Indian Time = UTC+5:30)
-    - cron: "30 5 * * *"   # 5:30 UTC = 11:00 IST
-  workflow_dispatch:      # manually run option
+    - cron: "30 5 * * *"   # रोज़ाना 11:00 AM IST
+  workflow_dispatch:       # manually run करने का option
 
 jobs:
-  run-scrap:
+  run-scraper:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,17 +20,16 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt || true
-        pip install beautifulsoup4 pandas openpyxl
+        pip install -r requirements.txt
 
-    - name: Run scrap
+    - name: Run scraper
+      env:
+        EMAIL_ADDRESS: ${{ secrets.Priyanshkhandelwal946215@gmail.com }}
+        EMAIL_PASSWORD: ${{ secrets.iksg bgeq ylly gyyz }}
       run: python amazon_scrap.py
 
-    - name: Upload output
+    - name: Upload output (Excel file)
       uses: actions/upload-artifact@v3
       with:
-        name: scrap-output
-        path: |
-          *.csv
-          *.xlsx
-          output/
+        name: amazon-products
+        path: amazon_products.xlsx
