@@ -1,4 +1,4 @@
-name: Run Amazon Scraper
+name: Run Amazon Scrap
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:      # manually run option
 
 jobs:
-  run-scraper:
+  run-scrap:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,13 +24,13 @@ jobs:
         pip install -r requirements.txt || true
         pip install beautifulsoup4 pandas openpyxl
 
-    - name: Run scraper
-      run: python amazon_scraper.py
+    - name: Run scrap
+      run: python amazon_scrap.py
 
     - name: Upload output
       uses: actions/upload-artifact@v3
       with:
-        name: scraper-output
+        name: scrap-output
         path: |
           *.csv
           *.xlsx
