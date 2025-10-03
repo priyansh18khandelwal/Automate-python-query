@@ -1,8 +1,8 @@
-name: Run Flipkart Scraper
+name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "6 15 * * *"   # runs every day at 20:36 IST
+    - cron: "15 15 * * *"   # runs every day at 20:45 IST
   workflow_dispatch:
 
 jobs:
@@ -25,10 +25,10 @@ jobs:
           pip install notebook pandas beautifulsoup4 openpyxl requests
 
       - name: Run Jupyter Notebook
-        run: jupyter nbconvert --to notebook --execute Flipkart_scrap.ipynb --output executed_notebook.ipynb
+        run: jupyter nbconvert --to notebook --execute Amazon_scrap.ipynb --output executed_notebook.ipynb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Flipkart-scraper-output
+          name: Amazon-scraper-output
           path: data.csv   # make sure your notebook actually writes data.csv
