@@ -25,7 +25,7 @@ jobs:
           pip install notebook pandas beautifulsoup4 openpyxl requests
 
       - name: Run Jupyter Notebook
-        run: jupyter nbconvert --to notebook --execute Amazon_scrap.ipynb --output executed_notebook.ipynb
+        run: jupyter nbconvert --to notebook --execute amazon_scrap.ipynb --output executed_notebook.ipynb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
