@@ -2,34 +2,32 @@ name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "* * * * *"   # हर minute run
-  workflow_dispatch:       # manually run करने का option
+    - cron: "* * * * *"   # runs every minute
+  workflow_dispatch:       # allows manual run from GitHub UI
 
 jobs:
-  run-scraper:
+  scrape:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true
 
-    - name: Run scraper
-      env:
-        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
-        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-      run: python amazon_scrap.py
+      - name: Run scraper script
+        run: python amazon_scrap.py
 
-    - name: Upload output (Excel file)
-      uses: actions/upload-artifact@v3
-      with:
-        name: amazon-products
-        path: amazon_products.xlsx
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: amazon-scraper-output
+          path: ./output/   # change this to your script’s output folder
