@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: amazon-scraper-output
-          path: ./output/   # change this to your script’s output folder
+          path: data.csv   # change this to your script’s output folder
