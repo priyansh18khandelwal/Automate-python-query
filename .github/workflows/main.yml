@@ -3,7 +3,7 @@ name: Run Amazon Scraper
 on:
   schedule:
     - cron: "* * * * *"   # runs every minute
-  workflow_dispatch:       # allows manual run from GitHub UI
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -22,12 +22,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
+          pip install notebook pandas beautifulsoup4 openpyxl requests
 
-      - name: Run scraper script
-        run: python amazon_scrap.py
+      - name: Run Jupyter Notebook
+        run: jupyter nbconvert --to notebook --execute amazon_scrap.ipynb --output executed_notebook.ipynb
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: amazon-scraper-output
-          path: data.csv   # change this to your script’s output folder
+          path: data.csv   # make sure your notebook actually writes data.csv
