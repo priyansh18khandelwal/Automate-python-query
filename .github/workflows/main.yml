@@ -2,7 +2,7 @@ name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "30 5 * * *"   # रोज़ाना 11:00 AM IST
+    - cron: "* * * * *"   # रोज़ाना 11:00 AM IST
   workflow_dispatch:       # manually run करने का option
 
 jobs:
