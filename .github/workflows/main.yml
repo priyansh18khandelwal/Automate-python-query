@@ -1,8 +1,8 @@
-name: Run Amazon Scraper 
+name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "* * * * *"   # रोज़ाना 11:00 AM IST
+    - cron: "* * * * *"   # हर minute run
   workflow_dispatch:       # manually run करने का option
 
 jobs:
@@ -24,8 +24,8 @@ jobs:
 
     - name: Run scraper
       env:
-        EMAIL_ADDRESS: ${{ secrets.Priyanshkhandelwal946215@gmail.com }}
-        EMAIL_PASSWORD: ${{ secrets.iksg bgeq ylly gyyz }}
+        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
       run: python amazon_scrap.py
 
     - name: Upload output (Excel file)
