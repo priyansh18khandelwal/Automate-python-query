@@ -2,26 +2,16 @@ name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "23 6 * * *"   # runs every day at 11:53 AM IST
+    - cron: "30 6 * * *"   # runs every day at 16:41 IST
   workflow_dispatch:
-
-permissions:
-  contents: read
-  actions: write
-  artifacts: write
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Debug: log timestamps (UTC + IST)
-        run: |
-          echo "UTC: $(date -u +"%Y-%m-%d %H:%M:%S %Z")" > run_timestamps.txt
-          echo "IST: $(TZ='Asia/Kolkata' date +"%Y-%m-%d %H:%M:%S %Z")" >> run_timestamps.txt
-          cat run_timestamps.txt
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,17 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt || true
           pip install notebook pandas beautifulsoup4 openpyxl requests
-
       - name: Run Jupyter Notebook
-        run: |
-          jupyter nbconvert --to notebook --execute amazon_scrap.ipynb --output executed_notebook.ipynb || true
-          if [ -f data.csv ]; then echo "data.csv found"; else echo "data.csv NOT found"; fi
+        run: jupyter nbconvert --to notebook --execute amazon_scrap.ipynb --output executed_notebook.ipynb
 
-      - name: Upload artifact (debug + output)
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: amazon-scraper-output
-          path: |
-            data.csv
-            run_timestamps.txt
-            executed_notebook.ipynb
+          path: data.csv   # make sure your notebook actually writes data.csv
