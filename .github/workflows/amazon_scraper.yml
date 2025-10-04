@@ -2,7 +2,7 @@ name: Run Amazon Scraper
 
 on:
   schedule:
-    - cron: "53 9 * * *"   
+    - cron: "44 9 * * *"   
   workflow_dispatch:
 
 jobs:
